@@ -1,21 +1,12 @@
 package com.wangshuo.wslive.wslivedemo;
 
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import java.util.LinkedList;
-
 import me.lake.librestreaming.core.listener.RESConnectionListener;
-import me.lake.librestreaming.filter.hardvideofilter.BaseHardVideoFilter;
-import me.lake.librestreaming.filter.hardvideofilter.HardVideoGroupFilter;
 import me.lake.librestreaming.ws.StreamAVOption;
 import me.lake.librestreaming.ws.StreamLiveCameraView;
-import me.lake.librestreaming.ws.filter.hardfilter.GPUImageBeautyFilter;
-import me.lake.librestreaming.ws.filter.hardfilter.WatermarkFilter;
-import me.lake.librestreaming.ws.filter.hardfilter.extra.GPUImageCompatibleFilter;
 
 public class LiveActivity extends AppCompatActivity {
     private static final String TAG = LiveActivity.class.getSimpleName();
@@ -48,10 +39,10 @@ public class LiveActivity extends AppCompatActivity {
 
         mLiveCameraView.init(this, streamAVOption);
         mLiveCameraView.addStreamStateListener(resConnectionListener);
-        LinkedList<BaseHardVideoFilter> files = new LinkedList<>();
-        files.add(new GPUImageCompatibleFilter(new GPUImageBeautyFilter()));
-        files.add(new WatermarkFilter(BitmapFactory.decodeResource(getResources(),R.mipmap.live),new Rect(100,100,200,200)));
-        mLiveCameraView.setHardVideoFilter(new HardVideoGroupFilter(files));
+//        LinkedList<BaseHardVideoFilter> files = new LinkedList<>();
+//        files.add(new GPUImageCompatibleFilter(new GPUImageBeautyFilter()));
+//        files.add(new WatermarkFilter(BitmapFactory.decodeResource(getResources(),R.mipmap.live),new Rect(100,100,200,200)));
+//        mLiveCameraView.setHardVideoFilter(new HardVideoGroupFilter(files));
     }
 
     RESConnectionListener resConnectionListener = new RESConnectionListener() {

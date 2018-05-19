@@ -32,9 +32,9 @@ public class StreamConfig {
 
         public static final int DEFAULT_VIDEO_HEIGHT = 360;
 
-        public static final int DEFAULT_VIDEO_BITRATE =600 * 1024;
+        public static final int DEFAULT_VIDEO_BITRATE =300 * 1024;
 
-        public static final int DEFAULT_VIDEO_FPS = 20;
+        public static final int DEFAULT_VIDEO_FPS = 10;
 
         public static final int DEFAULT_VIDEO_GOP = 2;
 

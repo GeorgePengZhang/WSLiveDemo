@@ -2,6 +2,7 @@ package me.lake.librestreaming.core;
 
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
+import android.media.MediaCodecInfo.EncoderCapabilities;
 import android.media.MediaFormat;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class MediaCodecHelper {
         videoFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, coreParameters.mediacodecAVCIFrameInterval);
         videoFormat.setInteger(MediaFormat.KEY_PROFILE, MediaCodecInfo.CodecProfileLevel.AVCProfileBaseline);
         videoFormat.setInteger(MediaFormat.KEY_LEVEL, MediaCodecInfo.CodecProfileLevel.AVCLevel31);
-        videoFormat.setInteger(MediaFormat.KEY_BITRATE_MODE, MediaCodecInfo.EncoderCapabilities.BITRATE_MODE_CBR);
+        videoFormat.setInteger(MediaFormat.KEY_BITRATE_MODE, EncoderCapabilities.BITRATE_MODE_VBR);
         MediaCodec result = null;
         try {
             result = MediaCodec.createEncoderByType(videoFormat.getString(MediaFormat.KEY_MIME));

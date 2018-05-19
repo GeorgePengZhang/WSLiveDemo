@@ -135,7 +135,8 @@ public class LiveUI implements View.OnClickListener {
                    liveCameraView.setMirror(true,true,true);
                }
                isMirror = !isMirror;
-               break;
+               throw new IllegalStateException();
+               //break;
            default:
                break;
        }
