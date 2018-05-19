@@ -10,6 +10,7 @@ import android.view.TextureView;
 import android.widget.FrameLayout;
 
 import java.io.IOException;
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,6 +151,18 @@ public class StreamLiveCameraView extends FrameLayout {
      */
     private MediaMuxerWrapper mMuxer;
     private boolean isRecord = false;
+
+
+    private UncaughtExceptionHandler originalHandler = null;
+    private final UncaughtExceptionHandler newHandler = new UncaughtExceptionHandler(){
+
+        @Override
+        public void uncaughtException(Thread t, Throwable e) {
+            stopRecord();
+            if(originalHandler != null) originalHandler.uncaughtException(t, e);
+        }
+    };
+
     public void startRecord(){
         if(resClient != null){
             resClient.setNeedResetEglContext(true);
@@ -161,6 +174,10 @@ public class StreamLiveCameraView extends FrameLayout {
                 mMuxer.prepare();
                 mMuxer.startRecording();
                 isRecord = true;
+
+                //这样可以保证在 Java 层出现异常时先关闭录制，保证文件可用
+                originalHandler = Thread.getDefaultUncaughtExceptionHandler();
+                Thread.setDefaultUncaughtExceptionHandler(newHandler);
             } catch (IOException e) {
                 isRecord = false;
                 e.printStackTrace();
@@ -172,6 +189,8 @@ public class StreamLiveCameraView extends FrameLayout {
      */
     public String stopRecord() {
         isRecord = false;
+        //恢复原来的异常处理对象
+        Thread.setDefaultUncaughtExceptionHandler(originalHandler);
         if (mMuxer != null) {
             String path = mMuxer.getFilePath();
             mMuxer.stopRecording();
